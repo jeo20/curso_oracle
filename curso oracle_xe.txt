@@ -1,0 +1,198 @@
+CLASE 01 - Descarga e Instalación de Oracle Database https://www.youtube.com/watch?v=_ePJqeQ-eWg&t=76s
+
+CLASE 02 - Descarga y uso del IDE SQL Developer https://www.youtube.com/watch?v=A-HUbdzu5WQ
+
+CLASE 03 - Crear Usuario de Sesión https://www.youtube.com/watch?v=yLVMdrDrsec
+
+	SQL PLUS
+	/as sysdba
+
+	ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+
+
+	CREAR USUARIO
+	*************
+		SQL> CREATE USER JEO IDENTIFIED BY "Oraclejeo23"
+		  2  DEFAULT TABLESPACE "USERS"
+		  3  TEMPORARY TABLESPACE "TEMP";
+		  
+		DEFINIR ESPACIO DE ALMACENAMIENTO DEL USUARIO 
+		 ALTER USER JEO QUOTA UNLIMITED ON USERS;
+		 
+		CREAR SESION PARA UN USUARIO
+		 GRANT CREATE SESSION TO JEO;
+		 
+		ASIGNACION DE PERMISOS
+		 GRANT "RESOURCE" TO JEO;
+		 
+		ASIGNACION DE ROL PARA UN USUARIO
+		 ALTER USER JEO DEFAULT ROLE "RESOURCE";
+
+
+
+CLASE 04 - Tipos de datos https://www.youtube.com/watch?v=t_yuVY-fA9c&t=24s
+
+
+CLASE 05 - Crear Tablas de datos - parte 01 https://www.youtube.com/watch?v=41hkAqJ82d8
+
+	CREANDO TABLA TB_CATEGORIAS CON 2 CAMPOS CODIGO_CA Y DESCRIPCION_CA
+	
+	CREATE TABLE TB_CATEGORIAS(CODIGO_CA INT,DESCRIPCION_CA VARCHAR(30));
+	ORACLE CAMBIO LOS TIPOS DE DATOS DE FORMA AUTOMATICA NUMBER POR INT Y VARCHAR POR VARCHAR2
+	
+
+CLASE 06 - Crear Tablas de datos - parte 02 https://www.youtube.com/watch?v=eLkfJMY4PMY
+
+	CREATE TABLE TB_MEDIDAS(CODIGO_ME NUMBER(3,0), ABREVIATURA_ME VARCHAR2 (3), DESCRIPCION_ME VARCHAR (20));
+	
+	CREATE TABLE TB_ARTICULOS(CODIGO_AR NUMBER(5,0),
+                         DESCRIPCION_AR VARCHAR2(50),
+                         MARCA_AR VARCHAR2(30),
+                         CODIGO_ME NUMBER(3,0),
+                         CODIGO_CA NUMBER (4,0),
+                         FECHA_ING DATE,
+                         STOCK_ACTUAL DECIMAL(10,2));
+						 
+						
+CLASE 07 - Borrar Tablas de Datos https://www.youtube.com/watch?v=LaP4WhxIEvE
+	DROP TABLE TB_MEDIDAS;
+	DROP TABLE TB_CATEGORIAS;
+	DROP TABLE TB_ARTICULOS;
+	
+	
+CLASE 08 - Crear nuevamente las Tablas de Datos https://www.youtube.com/watch?v=F2O98haenuc
+
+		CREATE TABLE TB_CATEGORIAS(CODIGO_CA NUMBER (4,0),DESCRIPCION_CA VARCHAR2(30));
+		
+		CREATE TABLE TB_MEDIDAS(CODIGO_ME NUMBER(3,0), 
+                        ABREVIATURA_ME VARCHAR2 (3),
+                        DESCRIPCION_ME VARCHAR (20));
+						
+		CREATE TABLE TB_ARTICULOS(CODIGO_AR NUMBER(5,0),
+                         DESCRIPCION_AR VARCHAR2(50),
+                         MARCA_AR VARCHAR2(30));
+						 
+						 
+CLASE 09 - Alteración de estructura de Tabla de Datos https://www.youtube.com/watch?v=0Py5E_RiTR0
+	
+	ALTER TABLE TB_CATEGORIAS MODIFY(CODIGO_CA NOT NULL);
+	
+	ALTER TABLE TB_CATEGORIAS MODIFY(DESCRIPCION_CA NOT NULL);
+
+	ALTER TABLE TB_MEDIDAS MODIFY (CODIGO_ME NOT NULL);
+	
+	ALTER TABLE TB_ARTICULOS MODIFY (CODIGO_AR NOT NULL);
+	
+	ALTER TABLE TB_MEDIDAS MODIFY DESCRIPCION_ME VARCHAR2(30);
+	
+	ALTER TABLE TB_ARTICULOS DROP COLUMN MARCA_AR;
+	
+	ALTER TABLE TB_ARTICULOS MODIFY CODIGO_AR NUMBER(6,0) DEFAULT 0;
+	
+	ALTER TABLE TB_CATEGORIAS MODIFY CODIGO_CA NUMBER(4,0) DEFAULT 0;
+	
+	ALTER TABLE TB_MEDIDAS MODIFY CODIGO_ME NUMBER(3,0) DEFAULT 0;
+	
+	ALTER TABLE TB_ARTICULOS ADD MARCA_AR VARCHAR2(30);
+	
+	ALTER TABLE TB_ARTICULOS ADD (CODIGO_ME NUMBER (3,0), CODIGO_CA NUMBER(4,0));
+	
+	
+CLASE 10 - Agregar Clave Primaria a Tablas de Datos https://www.youtube.com/watch?v=sHm_xLUWf8E
+
+	ALTER TABLE TB_ARTICULOS ADD PRIMARY KEY (CODIGO_AR);
+	
+	ALTER TABLE TB_CATEGORIAS ADD PRIMARY KEY (CODIGO_CA);
+	
+	ALTER TABLE TB_MEDIDAS ADD PRIMARY KEY (CODIGO_ME);
+	
+	
+CLASE 11 - Restricciones (foreign key) https://www.youtube.com/watch?v=tgpX6Vvi2O8
+
+	ALTER TABLE TB_ARTICULOS //TABLA HIJA
+	ADD CONSTRAINT FK_01 //DEFINO EL NOMBRE DE LA CLAVE FORANEA FK_01
+	FOREIGN KEY (CODIGO_ME)// DEFINO EL NOMBRE DEL CAMPO DE LA TABLA HIJA QUE VA A SER LA CLAVE FORANEA
+	REFERENCES TB_MEDIDAS(CODIGO_ME); // DEFINO EN LA CUAL SE ENCUENTRA LA REFERENCIA Y NOMBRE DEL CAMPO
+
+	ALTER TABLE TB_ARTICULOS
+	ADD CONSTRAINT FK_02
+	FOREIGN KEY (CODIGO_CA)
+	REFERENCES TB_CATEGORIAS(CODIGO_CA);
+
+
+CLASE 12 - Columnas IDENTITY Oracle https://www.youtube.com/watch?v=AuRdr3sbTM4
+
+	CREATE TABLE TB_ALMACENES (CODIGO_AL NUMBER (2,0) GENERATED ALWAYS AS IDENTITY,
+                          DESCRIPCION_AL VARCHAR2(30));
+						  
+CLASE 13 - Insertar Registro en Tablas -parte 01 https://www.youtube.com/watch?v=dnmw4BrqKpM
+
+	INSERT INTO TB_CATEGORIAS (CODIGO_CA, DESCRIPCION_CA)
+	VALUES (1,'OFICINAS');
+	
+	INSERT INTO TB_MEDIDAS (CODIGO_ME, ABREVIATURA_ME, DESCRIPCION_ME)
+	VALUES (1,'UND','UNIDADES');
+	
+	INSERT INTO TB_MEDIDAS (CODIGO_ME, ABREVIATURA_ME, DESCRIPCION_ME)
+	VALUES (4,'LTS','LITROS');
+	
+CLASE 14 - Insertar Registro en Tablas -parte 02 https://www.youtube.com/watch?v=4yQAWMx3Mp0
+
+	INSERT INTO TB_ARTICULOS(CODIGO_AR,
+                        DESCRIPCION_AR,
+                        MARCA_AR,
+                        CODIGO_ME,
+                        CODIGO_CA)
+                VALUES(1,
+                       'COMPUTADOR',
+                       'LENOVO',
+                       1,
+                       1);
+					   
+	INSERT INTO "JEO"."TB_ARTICULOS" (CODIGO_AR, DESCRIPCION_AR, MARCA_AR, CODIGO_ME, CODIGO_CA) VALUES ('2', 'IMPRESORA', 'HP', '1', '1')
+	
+	INSERT INTO TB_ARTICULOS(CODIGO_AR,
+                        DESCRIPCION_AR,
+                        MARCA_AR,
+                        CODIGO_ME,
+                        CODIGO_CA)
+                VALUES(4,
+                       'MICROONDAS',
+                       'LG',
+                       1,
+                       2);
+                        
+						
+	INSERT INTO TB_ARTICULOS(CODIGO_AR,
+                        DESCRIPCION_AR,
+                        MARCA_AR,
+                        CODIGO_ME,
+                        CODIGO_CA)
+                VALUES(5,
+                       'MESA EVENTOS',
+                       'STANDAR',
+                       1,
+                       3);
+                        
+						
+	INSERT INTO TB_ARTICULOS(CODIGO_AR,
+                        DESCRIPCION_AR,
+                        MARCA_AR,
+                        CODIGO_ME,
+                        CODIGO_CA)
+                VALUES(6,
+                       'ESCRITORIOS',
+                       'STANDAR',
+                       1,
+                       1);
+                        
+CLASE 15 - Actualizar Registro en Tablas https://www.youtube.com/watch?v=m2EOylsGMEk
+
+	UPDATE TB_ARTICULOS SET MARCA_AR = 'CANON' WHERE CODIGO_AR = 2;
+	
+	UPDATE TB_ARTICULOS SET MARCA_AR = 'SAMSUNG' WHERE CODIGO_AR IN (3,4);
+	
+	UPDATE TB_ARTICULOS SET DESCRIPCION_AR =CONCAT('* ',DESCRIPCION_AR)
+                    WHERE MARCA_AR ='STANDAR';
+					
+	

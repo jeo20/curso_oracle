@@ -1,0 +1,134 @@
+
+Tipos de datos en la base de datos Oracle
+Introducción
+En este post , se realizara un pequeña introducción a los tipos de datos de la DB oracle. Se puede decir que elegir el tipo de datos apropiado parece ser simple, y muchas veces se hace incorrectamente. Por lo tanto, esta mala decisión tiene un impacto negativo en el performance del aplicativo. Por lo tanto, la elección del tipo de datos adecuado es una tarea muy importante.
+
+Clasificamos los tipos de datos en las siguientes categorías:
+
+Los tipos de datos caracteres:
+CHAR
+NCHAR
+NVARCHAR2
+VARCHAR2
+LONG
+RAW
+LONG RAW
+
+Los tipos de datos numéricos:
+NUMBER
+BINARY_FLOAT
+BINARY_DOUBLE
+
+Los tipos de datos de fecha y hora:
+DATE
+TIMESTAMP
+TIMESTAMP WITH TIME ZONE
+TIMESTATM WITH LOCAL TIME ZONE
+INTERVAL
+
+Los tipos de datos Objetos / binarios:
+BFILE
+BLOB
+CLOB
+NCLOB
+
+Tipos de datos ROWID
+ROWID
+
+Descripción del tipo de datos de caracteres
+CHAR (tamaño): Una cadena de caracteres de longitud fija con un tamaño máximo de 2000 bytes. Si inserta un valor inferior a la longitud especificada, Oracle rellenará el espacio en blanco. Si inserta un valor que es demasiado largo, Oracle devolverá un error. El tamaño es el número de caracteres a almacenar.
+
+NCHAR (tamaño): Similar a CHAR (tamaño) que contiene datos Unicode formateados.
+
+VARCHAR2 (tamaño): Una cadena de caracteres de longitud variable con un tamaño máximo de 4000 bytes.
+
+NVARCHAR2 (tamaño): Similar a VARCHAR2 (tamaño) que contiene datos Unicode formateados.
+
+LONG: Un tipo de datos para almacenar datos de caracteres de longitud variable de hasta 2 Gb de longitud (versión más grande que VARCHAR2).
+
+RAW: Un tipo binario de longitud variable para almacenar datos de caracteres. No habrá conversión de conjunto de caracteres en los datos almacenados, por lo que se considera una cadena de bytes binarios de información. Almacena hasta 2.000 bytes.
+
+LONG RAW: Este tipo de datos es similar al tipo de datos LONG, así que es recomendable que utilice los tipos de datos CLOB o NCLOB.
+
+
+Descripción del tipo de datos numérico
+NUMBER (p, s): Un tipo de dato utilizada para almacenar valores numéricos. El Tipo de dato tiene un número de precisión p y una escala s. La precisión p puede variar de 1 a 38. La escala de s puede variar desde -84 hasta 127.
+
+Precisión es el número total de dígitos permitidos.
+
+Escala es el número de dígitos permitidos a la derecha del punto decimal
+
+Por ejemplo:
+NUMBER (8,1) Además puede almacenar un valor máximo de 9.999.999,9
+
+NUMBER (8,6)puede almacenar un valor máximo para 99.999999
+
+Si no se especifica precisión, la escala predeterminada es el rango máximo.
+
+Si se especifica una precisión, la escala por defecto es 0 (sin dígitos a la derecha del punto decimal).
+
+Por ejemplo:
+
+NUMBER, Sin embargo si no se pone el tamaño toma cualquier número de coma flotante (con decimales)
+
+NUMBER (38), puede almacenar sólo los datos enteros (sin decimales), ya que los valores predeterminados de escala a 0
+
+Si un valor excede la precisión permitida, base de datos Oracle devuelve un error “ORA–01438: valor mayor que el que permite la precisión especificada para esta columna”
+
+BINARY_FLOAT: El número de coma flotante de precisión simple IEEE nativa. Se almacena en 5 bytes: 4 bytes fijos para el número de punto flotante y 1 byte de longitud. Puede almacenar números en el rango de ~ ± 1038.53 con 6 dígitos de precisión.
+
+BINARY_DOUBLE: El número de coma flotante de doble precisión IEEE nativa. Se almacena en 9 bytes: 8 bytes fijos para el número de coma flotante y 1 byte de longitud. Puede almacenar números en el rango de ± 10308.25 con 13 dígitos de precisión.
+
+A modo de resumen, podemos decir que el tipo de datos número tiene una precisión significativamente mayor que la BINARY_FLOAT y los tipos de datos BINARY_DOUBLE, sino una gama mucho más pequeña (para almacenar los números).
+
+
+Descripción del tipo de datos de fecha y hora
+DATE.- Estos tipos de datos son utilizadas para almacenar la fecha y valores de tiempo en una estructura de 7-byte de ancho fijo
+
+Puede manejar intervalos de fechas desde el 1 de enero de 4712 AEC hasta el 31 de diciembre de 9999.
+
+El formato de la estructura de 7 bytes es:
+
+1. el siglo
+
+2. el año en el siglo
+
+3. el mes
+
+4. el día del mes
+
+5. La hora
+
+6. El minuto
+
+7. El segundo
+
+TIMESTAMP: Está una extensión del tipo de datos DATE que puede almacenar datos de fecha y hora (incluyendo fracciones de segundo). Se pueden conservar hasta 9 dígitos a la derecha del punto decimal. Este tipo de datos toma 11 bytes de almacenamiento.
+
+TIMESTAMP WITH TIME ZONE: Está una extensión del tipo de datos TIMESTAMP que puede almacenar, además, la información de zona horaria, por lo que la zona horaria insertada originalmente se conserva con los datos. Este tipo de datos se almacena en una estructura de 13 bytes de ancho fijo.
+
+TIMESTATM WITH LOCAL TIME ZONE: Este es un tipo de datos similar al tipo de datos TIMESTAMP, sin embargo Está depende de la zona horaria. Por ejemplo, si inserta un valor de fecha / hora de una aplicación Web utilizando la zona horaria US / Pacific y la zona horaria de la base de datos es US / Eastern, el valor de fecha / hora final se convertirá en
+
+EEUU / zona horaria del Este y se almacena como un valor de marca de tiempo. Cuando se solicita de nuevo la información, la marca de tiempo almacenado en la base de datos se convierte de nuevo a la zona horaria de aplicaciones Web (US / Pacífico).
+
+INTERVAL: En primer lugar este tipo de datos se utiliza para almacenar un período de tiempo / duración de tiempo. Como consecuencia podemos utilizar este tipo de datos para la aritmética de fechas con el fin de añadir o restar un período de tiempo de una fecha o los tipos de datos de fecha y hora. Hay dos tipos de intervalo:
+
+1. INTERVAL YEAR TO MONTH:
+para almacenar una diferencia en años y meses.Es un tipo de datos de 5 bytes de ancho fijo.
+
+2. INTERVAL DAY TO SECOND
+para almacenar una diferencia en días, horas, minutos y segundos.Es un tipo de datos de 11 bytes de anchura fija.
+
+
+Objetos grandes / descripción de tipo de datos binario
+BFILE: Para empezar, este tipo de dato que permite almacenar un puntero a un objeto en el sistema de archivos en una columna de base de datos y para leer el archivo directamente desde el sistema de archivos. Esto le permite acceder a los archivos disponibles en el sistema de archivos del servidor de base de datos como si estuvieran almacenados en la propia tabla de la base de datos.
+
+BLOB: Como consecuencia este tipo de datos que puede contener hasta 4 GB de datos. BLOB son útiles para almacenar documentos binarios (por ejemplo, hoja de cálculo, un documento de procesamiento de textos, imágenes, audio, video). A diferencia de BFILE tipo de datos que almacena la información digitalizada en el sistema de archivos, tipo de datos BLOB almacena la información digitalizada directamente en la base de datos.
+
+CLOB: Por otra parte un tipo de datos que puede contener hasta 4 GB de información. por lo tanto este tipo de datos contiene información que está sujeta a conversión de conjunto de caracteres. Además es apropiado para almacenar información de texto plano grande. En resumen no es apropiado para almacenar los datos de texto sin formato son de 4.000 bytes o menos, en este caso se recomienda utilizar el tipo de datos VARCHAR2.
+
+NCLOB.- Funciona de la misma manera, que que el tipo de dato CLOB, pero los caracteres son almacenados en una NLS o en un conjunto de caracteres Unicode de varios bytes.
+
+
+Descripción del tipo de datos Rowid
+ROWID: por lo general usa dirección de 10 bytes de una fila en una base de datos. La información suficiente se codifica en el ROWID para localizar la fila en el disco, así como identificar el objeto al que apunta el ROWID.
