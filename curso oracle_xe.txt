@@ -12,7 +12,7 @@ CLASE 03 - Crear Usuario de Sesión https://www.youtube.com/watch?v=yLVMdrDrsec
 
 	CREAR USUARIO
 	*************
-		SQL> CREATE USER JEO IDENTIFIED BY "Oraclejeo23"
+		SQL> CREATE USER JEO IDENTIFIED BY "jeo123"
 		  2  DEFAULT TABLESPACE "USERS"
 		  3  TEMPORARY TABLESPACE "TEMP";
 		  
