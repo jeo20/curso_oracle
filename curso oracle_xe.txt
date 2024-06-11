@@ -16,7 +16,11 @@ CLASE 03 - Crear Usuario de Sesión https://www.youtube.com/watch?v=yLVMdrDrsec
 
 	CREAR USUARIO
 	*************
+<<<<<<< HEAD
 		SQL> CREATE USER JEO IDENTIFIED BY "jeo123" (creo el usuario JEO y la clave jeo123)
+=======
+		SQL> CREATE USER JEO IDENTIFIED BY "jeo123"
+>>>>>>> 61af7de8a7db473e8bb8f3b7b22adac752ececb9
 		  2  DEFAULT TABLESPACE "USERS"
 		  3  TEMPORARY TABLESPACE "TEMP";
 		  
