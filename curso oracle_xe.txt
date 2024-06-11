@@ -1,18 +1,22 @@
+usuario: sys 
+clave: jeo123
+
+
+
 CLASE 01 - Descarga e Instalación de Oracle Database https://www.youtube.com/watch?v=_ePJqeQ-eWg&t=76s
 
 CLASE 02 - Descarga y uso del IDE SQL Developer https://www.youtube.com/watch?v=A-HUbdzu5WQ
 
 CLASE 03 - Crear Usuario de Sesión https://www.youtube.com/watch?v=yLVMdrDrsec
 
-	SQL PLUS
-	/as sysdba
+	Ejecutar SQL PLUS (Introduzca el nombre de usuario: /as sysdba)
 
-	ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+	ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE; (se usa para la creacion de usuarios con nombres reservados o comunes)
 
 
 	CREAR USUARIO
 	*************
-		SQL> CREATE USER JEO IDENTIFIED BY "Oraclejeo23"
+		SQL> CREATE USER JEO IDENTIFIED BY "jeo123" (creo el usuario JEO y la clave jeo123)
 		  2  DEFAULT TABLESPACE "USERS"
 		  3  TEMPORARY TABLESPACE "TEMP";
 		  
@@ -31,6 +35,29 @@ CLASE 03 - Crear Usuario de Sesión https://www.youtube.com/watch?v=yLVMdrDrsec
 
 
 CLASE 04 - Tipos de datos https://www.youtube.com/watch?v=t_yuVY-fA9c&t=24s
+	Los tipos de datos caracteres:
+	CHAR
+	NCHAR
+	NVARCHAR2
+	VARCHAR2
+	VARCHAR *
+	LONG
+	RAW
+	LONG RAW
+	
+	Los tipos de datos numéricos:
+	NUMBER *
+	INT *
+	DECIMAL
+	BINARY_FLOAT
+	BINARY_DOUBLE
+
+	Los tipos de datos de fecha y hora:
+	DATE *
+	TIMESTAMP *
+	TIMESTAMP WITH TIME ZONE
+	TIMESTATM WITH LOCAL TIME ZONE
+	INTERVAL
 
 
 CLASE 05 - Crear Tablas de datos - parte 01 https://www.youtube.com/watch?v=41hkAqJ82d8
